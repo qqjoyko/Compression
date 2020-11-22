@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class BWTest1 {
 
     public static void main(String[] args) {
-        String str = "this is first test";
+        String str = "thisisi???sisisis";
         System.out.println("inputString："+str);
         String enCodeStr = enCode(str);
         System.out.println("String encode："+enCodeStr);
@@ -11,7 +11,7 @@ public class BWTest1 {
     }
 
     public static String enCode(String line) {
-        String str = line + "&";
+        String str = line + "$";
         int len = str.length();
         char[] charArray = str.toCharArray();
         char[][] ch = new char[len][len];
@@ -44,16 +44,13 @@ public class BWTest1 {
         return sBuffer.toString();
     }
 
-    // bwt解码
-    public static String deCode(String str) {
+    public static String deCode(String str) {//still has bugs to fix
         int len = str.length();
         String[] strArr = new String[len];
         for (int i = 0; i < len; i++) {
             strArr[i] = str.substring(i, i + 1) + ":" + i;
         }
         Arrays.sort(strArr);
-        // for(String string : strArr)
-        // System.out.println(string);
         StringBuffer sb = new StringBuffer();
         int num = 0;
         int corr = Integer.parseInt(strArr[0].split(":")[1]);
