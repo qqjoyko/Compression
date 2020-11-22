@@ -76,9 +76,6 @@ public class zip1 {
 
         }
     }
-}
-public class TestZip
-{
 
     public static void main(String[] args)
     {
