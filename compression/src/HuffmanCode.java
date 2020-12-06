@@ -62,4 +62,28 @@ public class HuffmanCode {
           }
           return (root = pq.remove());
       }
+          public List<BinaryNode> make_set(Integer[] frequency) {
+          List<BinaryNode> nodeList = new ArrayList<HuffmanCode.BinaryNode>(
+                  frequency.length);
+          for (Integer i : frequency) {
+              nodeList.add(new BinaryNode(i, null, null, null));
+          }
+          nodes = frequency.length << 1 - 1;// huffman 树中结点个数等于叶子结点个数乘以2减去1
+          return nodeList;
+      }
+         public int huffman_cost(List<BinaryNode> nodeList) {
+          int cost = 0;
+          int level;
+          BinaryNode currentNode;
+          for (BinaryNode binaryNode : nodeList) {
+              level = 0;
+              currentNode = binaryNode;
+              while (currentNode != root) {
+                  currentNode = currentNode.parent;
+                  level++;
+              }
+              cost += level * binaryNode.frequency;
+          }
+         return cost;
+   }        
 }
