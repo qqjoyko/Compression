@@ -85,5 +85,64 @@ public class HuffmanCode {
               cost += level * binaryNode.frequency;
           }
          return cost;
-   }        
+   }  
+          public String huffmanEncoding(List<BinaryNode> nodeList) {
+         StringBuilder sb = new StringBuilder();
+         BinaryNode currentNode;
+         for (BinaryNode binaryNode : nodeList) {
+             currentNode = binaryNode;
+             while (currentNode != root) {
+                 if (currentNode.isLeftChild())
+                     sb.append("0");// 左孩子编码为0
+                 else if (currentNode.isRightChild())
+                     sb.append("1");// 右孩子编码为1
+                 currentNode = currentNode.parent;
+             }
+         }
+         return sb.toString();
+     }
+ 
+     public Map<BinaryNode, String> huffmanDecoding(String encodeString) {
+         BinaryNode currentNode = root;
+         //存储每个叶子结点对应的二进制编码
+         Map<BinaryNode, String> node_Code = new HashMap<HuffmanCode.BinaryNode, String>();
+         StringBuilder sb = new StringBuilder();//临时保存每个结点的二进制编码
+         for (int i = 0; i < encodeString.length(); i++) {
+             
+             char codeChar = encodeString.charAt(i);
+             sb.append(codeChar);
+             if (codeChar == '0')
+                 currentNode = currentNode.left;
+             else
+                 currentNode = currentNode.right;
+             if (currentNode.left == null && currentNode.right == null)// 说明是叶子结点
+             {
+                 node_Code.put(currentNode, sb.toString());
+                 sb.delete(0, sb.length());//清空当前结点,为存储下一个结点的二进制编码做准备
+                 currentNode = root;//下一个叶子结点的解码,又从根开始
+             }
+         }
+         return node_Code;
+     }
+
+     // for test purpose
+     public static void main(String[] args) {
+         Integer[] frequency = { 10, 15, 12, 3, 4, 13, 1 };//各个结点的初始频率
+         HuffmanCode hc = new HuffmanCode();
+         List<BinaryNode> nodeList = hc.make_set(frequency);//构造各个单节点树
+         hc.buildHuffmanTree(nodeList);//构建huffman tree
+         int totalCost = hc.huffman_cost(nodeList);//计算huffman tree的代价
+         System.out.println(totalCost);
+         String encodeStr = hc.huffmanEncoding(nodeList);//将各个叶子结点进行huffman 编码
+         System.out.println("编码后的字符串" + encodeStr);
+         
+         //根据编码字符串解码
+         Map<BinaryNode, String> decodeMap = hc.huffmanDecoding(encodeStr);
+         Set<Map.Entry<BinaryNode, String>> entrys = decodeMap.entrySet();
+         for (Map.Entry<BinaryNode, String> entry : entrys) {
+             BinaryNode node = entry.getKey();
+             String code = entry.getValue();
+             System.out.println("Node's frequency=" + node.frequency + " : " + code);
+         }
+     }
 }
