@@ -134,7 +134,7 @@ public class HuffmanCode {
          int totalCost = hc.huffman_cost(nodeList);//计算huffman tree的代价
          System.out.println(totalCost);
          String encodeStr = hc.huffmanEncoding(nodeList);//将各个叶子结点进行huffman 编码
-         System.out.println("编码后的字符串" + encodeStr);
+         System.out.println("String after encode: " + encodeStr);
          
          //根据编码字符串解码
          Map<BinaryNode, String> decodeMap = hc.huffmanDecoding(encodeStr);
