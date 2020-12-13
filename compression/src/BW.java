@@ -46,10 +46,47 @@ public class BW{
         }
         return "";
     }
+    private static final class BWTComparator implements java.util.Comparator<Integer> {//cite: skitaoka
+        private final String string;
+
+        BWTComparator(String string) {
+            this.string = string;
+        }
+
+        @Override
+        public int compare(Integer i, Integer j) {
+            return string.charAt(i) - string.charAt(j);
+        }
+
+        public boolean equals(Integer i, Integer j) {
+            return string.charAt(i) == string.charAt(j);
+        }
+    }
+
+    public static String decodeLF(String encodedString) {//cite: skitaoka really well idea
+        Integer[] indices = new Integer[encodedString.length()];
+        for (int i = 0; i < indices.length; ++i) {
+            indices[i] = i;
+        }
+        java.util.Arrays.sort(indices, new BWTComparator(encodedString));
+        for(int i = 0;i<indices.length;i++)
+            System.out.println(indices[i]+"|"+encodedString.charAt(i));
+        int startIndex = 0;
+        for (; !(encodedString.charAt(startIndex)+"").equals("\u0002"); ++startIndex);
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < indices.length - 2; ++i) {//delete STX and ETX
+            startIndex = indices[startIndex];
+            char c = encodedString.charAt(startIndex);
+            builder.append(c);
+        }
+        return builder.toString();
+    }
     public static void main(String args[]){
-        BW one = new BW("I like banana !$%^& t2es3t^&     no problem");
+        BW one = new BW("banana");
         String tmp = one.enCode();
-        System.out.println(tmp);
-        System.out.println(deCode(tmp));
+        System.out.println("encode"+tmp);
+        System.out.println("decode: "+deCode(tmp));
+        System.out.println("decodeLF: "+decodeLF(tmp));
     }
 }
