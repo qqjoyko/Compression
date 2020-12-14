@@ -26,7 +26,6 @@ Data compression refers to reducing the amount of data without losing useful inf
 
 
 
-#### Github repo: https://github.com/qqjoyko/CompressionGoogle 
-
-#### Driver：https://drive.google.com/drive/folders/1iLrH7XdmMObdxcJOCfdGZbOnrPk4x-NF
+#### Github repo: https://github.com/qqjoyko/Compression
+#### Google Driver：https://drive.google.com/drive/folders/1iLrH7XdmMObdxcJOCfdGZbOnrPk4x-NF
 
