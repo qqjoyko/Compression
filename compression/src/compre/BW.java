@@ -1,8 +1,10 @@
+package compre;
+
 import java.util.*;
 
 public class BW{
-    static final String BEGIN = "\u0002";//Use STX//cite: wiki BWT way avoid the old way(only use a end mark#)can't deal with "space"
-    static final String END = "\u0003";//Use ETX
+    static final String BEGIN = "#";//Use STX//cite: wiki BWT way avoid the old way(only use a end mark#)can't deal with "space"
+    static final String END = "$";//Use ETX
     private ArrayList<String> status;
     private String revStr;
     private int len;
