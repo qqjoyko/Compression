@@ -91,7 +91,7 @@ public class Huffman {
   
     private void creatTree() {
 
-        while (NodeList.size() > 1) {// 当节点数目大于一时
+        while (NodeList.size() > 1) {
           
             HNode left = NodeList.poll();
             HNode right = NodeList.poll();
