@@ -3,7 +3,8 @@ package compre;/*
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+import java.io.*;
+import java.nio.file.*;
 import java.util.LinkedList;
 /**
  *
@@ -229,22 +230,60 @@ public class Huffman {
         if (root.rChild != null) {
             matchCode(root.rChild, code);
         }
+        
+        public static String fileReader(String sc) throws IOException {
+        File file = new File(sc);
+        BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(fis,"utf-8"),5*1024*1024);
+
+        StringBuilder output = new StringBuilder();
+        String line = "";
+        StringBuilder content = new StringBuilder();
+        while((line = reader.readLine()) != null){
+            content.append(line);
+            if(content.length()>2000){
+                BW one = new BW(content.toString());
+                output.append(one.enCode());
+                content = new StringBuilder();
+            }
+        }
+        BW one = new BW(content.toString());
+        output.append(one.enCode());
+        return output.toString();
+    }
 
     }
     public static void main(String[] args) {
 
         Huffman huff = new Huffman();
-
-        String data = "aaaaaabcdesufsasgdebbhchdbabhdcxsdchd";
+        
+        String data = fileReader("C:\\Document.txt");
         huff.creatHfmTree(data);
 
         huff.output(); 
 
         
         String hufmCode = huff.toHufmCode(data); 
-        System.out.println("Encode:" + hufmCode);
+       // System.out.println("Encode:" + hufmCode);
 
         
-        System.out.println("Decode：" + huff.CodeToString(hufmCode));            
+        //System.out.println("Decode：" + huff.CodeToString(hufmCode));
+        
+        int z = 0;
+        byte[] bb=new byte[hufmCode.length()/7+1];
+    for(int i=0;i<hufmCode.length()/7;i++){
+        String a = hufmCode.substring(z,z+7);
+        byte b=Byte.parseByte(a,2);
+
+        bb[i]=b;
+        z = z+7;
+        if (z+7>=hufmCode.length()){
+        bb[i+1]=Byte.parseByte(hufmCode.substring(z),2);
+        break;
+}
+}
+        OutputStream output = new FileOutputStream("C:\\Result.dat");
+         output.write(bb); 
+         output.close();
     }
 }
