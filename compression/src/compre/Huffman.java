@@ -253,7 +253,7 @@ public class Huffman {
     }
 
     }
-    public static void main(String[] args) {
+    public static void main(String[] args)throws IOException {
 
         Huffman huff = new Huffman();
         
