@@ -1,4 +1,4 @@
-package compression;
+package compre;
 
 import java.io.*;
 import java.util.regex.Matcher;
