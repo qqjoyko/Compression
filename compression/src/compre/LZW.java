@@ -1,12 +1,14 @@
 package compre;
 
+import com.sun.javaws.IconUtil;
+
 import java.io.*;
 import java.util.*;
 
 
 public class LZW {
     /** Compress a string to a list of output symbols. */
-    public static List<Integer> compress(String uncompressed) {
+    public static List<Integer> compress(String inputString) {
         // Build the dictionary.
         int dictSize = 256;
         Map<String, Integer> dictionary = new HashMap<String,Integer>();
@@ -15,7 +17,7 @@ public class LZW {
 
         String w = "";
         List<Integer> result = new ArrayList<Integer>();
-        for (char c : uncompressed.toCharArray()) {
+        for (char c : inputString.toCharArray()) {
             String wc = w + c;
             if (dictionary.containsKey(wc))
                 w = wc;
@@ -83,6 +85,20 @@ public class LZW {
         return output.toString();
     }
 
+    public static String fileReader2(String sc) throws IOException {
+        File file = new File(sc);
+        BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(fis, "utf-8"), 5 * 1024 * 1024);
+
+        StringBuilder output = new StringBuilder();
+        String line = "";
+        StringBuilder content = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            content.append(line);
+        }
+        return content.toString();
+    }
+
 
 
     public static List<Integer> testBWInputCompressed(String file) throws IOException {
@@ -101,20 +117,46 @@ public class LZW {
         //small test
 
 
-        List<Integer> smallCompressed = compress("TOBEORNOTTOBEORTOBEORNOT");
-        System.out.println(smallCompressed);
-        System.out.println("\n");
-        String smallDecompressed = decompress(smallCompressed);
-        System.out.println(smallDecompressed);
-        System.out.println("\n");
+//        System.out.println("original string: ABABAB");
+//        System.out.println("\n");
+//        List<Integer> smallCompressed = compress("6 66666666? 6 666  ?   ?  ?66?   6");
+//        System.out.println("compress result:" + smallCompressed);
+//        System.out.println(smallCompressed.size());
+//        System.out.println("\n");
+//        String smallDecompressed = decompress(smallCompressed);
+//        System.out.println("decompress result:" + smallDecompressed);
 
 
 
-        //use BW string to test LZW compress and decompress
+
+//        use BW string to test LZW compress and decompress
+        long startTime1=System.currentTimeMillis();
         List<Integer> compressed = testBWInputCompressed("D:/JavaLearning_S1/593final_git/Decameron.txt");
-        System.out.println(compressed);  //code
+        System.out.println(compressed.size());  //code
         System.out.println( "\n");
+        long endTime1=System.currentTimeMillis();
 
+        System.out.println("running time： "+(endTime1-startTime1)+"ms");
+//
+
+        long startTime=System.currentTimeMillis();
+        List<Integer> compressed2 = compress(fileReader2("D:/JavaLearning_S1/593final_git/Decameron.txt"));
+//        System.out.println(compressed2);
+        System.out.println(compressed2.size());
+        long endTime=System.currentTimeMillis();
+
+        System.out.println("running time： "+(endTime-startTime)+"ms");
+
+//        String input = "abcabcabcabcabcabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd";
+//        System.out.println("input string: " + input);
+//        System.out.println("input length: " + input.length());
+//        System.out.println("compressed output: " + compress(input));
+//        System.out.println("compressed output length: " + compress(input).size());
+
+//        BW one = new BW(input);
+//        String tmp = one.enCode();
+//        System.out.println("BW string: " + tmp);
+//        System.out.println("compressed output: " + compress(tmp).size());
 //        String decompressed = decompress(compressed);
 //        System.out.println(decompressed);
 //        System.out.println( " ");
